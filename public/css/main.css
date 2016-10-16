@@ -565,6 +565,12 @@ a:visited {
     vertical-align: top;
 }
 
+@media (max-width: 600px) {
+    .treehouse > .treehouse-badge-wrapper > .treehouse-badge > .badge-name {
+        display: none;
+    }
+}
+
 .treehouse > .treehouse-badge-wrapper > .treehouse-badge img {
     width: 50%;
     margin-bottom: 10px;

@@ -59,7 +59,7 @@
                         '<a href="' + badge.url + '">' +
                             '<img src="' + badge.icon_url + '" alt="Icon for ' + badge.name + '">' +
                         '</a>' +
-                        '<p>' + badge.name + '</p>' +
+                        '<p class="badge-name">' + badge.name + '</p>' +
                     '</div>'
                 );
             }
