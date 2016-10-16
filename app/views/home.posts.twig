@@ -1,0 +1,38 @@
+<div id="latest-blog-posts" class="section section-latest-blog-posts">
+    <h2 class="front-page-section-title">Latest From The Blog</h2>
+    <div class="latest-post-wrapper">
+        <?php if ( have_posts() ) : ?>
+        <div class="row" data-equalizer data-equalize-on="medium" id="test-eq">
+            <?php while ( have_posts() ) : the_post(); ?>
+            <div class="medium-6 columns">
+                <div class="latest-post" data-equalizer-watch>
+                    <?php if (has_post_thumbnail()) : ?>
+                    <div class="post-image">
+                        <a href="<?php echo esc_url(get_permalink(get_the_ID())); ?>">
+                            <?php the_post_thumbnail(); ?>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                    <div class="post-content">
+                        <div class="post-category">
+                            <?php the_category(); ?>
+                        </div>
+                        <h3 class="post-title">
+                            <a href="<?php echo esc_url(get_permalink(get_the_ID())); ?>">
+                                <?php the_title(); ?>
+                            </a>
+                        </h3>
+                        <div class="post-info">
+                            Posted by <?php the_author(); ?> on <?php the_date(); ?>
+                        </div>
+                        <?php the_excerpt(); ?>
+                    </div>
+                </div>
+            </div>
+            <?php endwhile; ?>
+        </div>
+        <?php else : ?>
+        <p><?php _e( 'No posts yet.' ); ?></p>
+        <?php endif; ?>
+    </div>
+</div>

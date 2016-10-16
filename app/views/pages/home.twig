@@ -1,0 +1,71 @@
+{% extends "layouts/master.twig" %}
+
+{% block content %}
+<div class="site-content">
+    <div class="row page-wrapper">
+        <div id="primary" class="content-area">
+            <main id="main" class="site-main">
+                <div id="about" class="section section-about">
+
+                    <div class="about-box">
+                        <div class="profile">
+                            <div class="expanded row">
+                                <div class="hide-for-small-only medium-5 columns">
+                                    <div class="me-wrapper">
+                                        <img src="/img/me.jpg" alt="Nick Bryan in Berlin with a coffee">
+                                    </div>
+                                </div>
+                                <div class="small-12 medium-7 columns">
+                                    <div class="profile-head">
+                                        <div class="profile-hi"><span>Hi</span></div>
+                                        <h1 class="profile-title"><span>I'm</span> Nick Bryan</h1>
+                                        <h2 class="profile-slogan">Passionate Developer and Programming Enthusiast</h2>
+                                    </div>
+                                    <ul class="profile-information">
+                                        <li>
+                                            <strong class="title">Age</strong>
+                                            <span class="content">{{ age }}</span>
+                                        </li>
+                                        <li>
+                                            <strong class="title">Main Languages</strong>
+                                            <span class="content">PHP, Javascript</span>
+                                        </li>
+                                        <li>
+                                            <strong class="title">Hobbies</strong>
+                                            <span class="content">Programming, Climbing, Guitar, Home Brewing, Gaming</span>
+                                        </li>
+                                        <li>
+                                            <strong class="title">Job</strong>
+                                            <span class="content">PHP Developer at Mann Island Finance</span>
+                                        </li>
+                                        <li>
+                                            <strong class="title">Developing For</strong>
+                                            <span class="content">{{ timeDeveloping }}</span>
+                                        </li>
+                                        <li>
+                                            <strong class="title">Location</strong>
+                                            <span class="content">Merseyside, United Kingdom</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-social-icons">
+                            <ul class="social-icons">
+                                <li><a href="https://github.com/nickbryan" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                                <li><a href="https://teamtreehouse.com/nickbryan" target="_blank"><i class="fi-social-treehouse"></i></a></li>
+                                <li><a href="https://twitter.com/iamnickbryan" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.linkedin.com/in/nickbryandev" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="about-snippet" class="section section-about-snippet">
+                    {{ content|raw }}
+                </div>
+
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}

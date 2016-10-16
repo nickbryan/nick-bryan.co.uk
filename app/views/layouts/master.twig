@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% if meta.description %}
+            <meta name="description" content="{{ meta.description }}">
+        {% endif %}
+        <title>{{ meta.title }}</title>
+
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css?ver=4.6.1">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/foundation-icons/3.0/foundation-icons.min.css?ver=4.6.1">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans%3A300%2C400%2C700&ver=4.6.1">
+        <link rel="stylesheet" type="text/css" href="/css/vendor/foundation.css">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+    </head>
+
+    <body>
+        <div id="page" class="site">
+            <div class="modal-body"></div>
+
+            {{ include('includes/header.twig') }}
+
+            {% block content %}{% endblock %}
+
+            {{ include('includes/footer.twig') }}
+        </div>
+
+        <script type="text/javascript" src="/js/vendor/jquery.js"></script>
+        <script type="text/javascript" src="/js/vendor/what-input.js"></script>
+        <script type="text/javascript" src="/js/vendor/foundation.js"></script>
+        <script type="text/javascript" src="/js/vendor/navigation.js"></script>
+        <script type="text/javascript" src="/js/main.js"></script>
+    </body>
+</html>

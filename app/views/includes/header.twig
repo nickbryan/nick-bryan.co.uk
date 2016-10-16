@@ -1,0 +1,27 @@
+<header class="site-header">
+    {{ include('includes/navigation.twig') }}
+    <div class="header-bar">
+        <div class="header-bar-inner-wrapper">
+            <div class="expanded row">
+                <div class="medium-9 small-6 columns">
+                    <div class="nav-wrapper">
+                        <button id="toggle-navigation" class="open-navigation">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    {% if page.title %}
+                    <h1 class="page-master-title">{{ page.title }}</h1>
+                    {% endif %}
+                </div>
+                <div class="medium-3 small-6 columns">
+                    <a href="/">
+                        <img class="logo-image" src="/img/logo-light.png" alt="Nick Bryan website logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if onHomePage %}
+    <div class="header-background"></div>
+    {% endif %}
+</header>
