@@ -1,0 +1,22 @@
+<div class="treehouse">
+    <h4 class="title-center">Latest Activity</h4>
+    <div id="treehouse-badge-wrapper" class="treehouse-badge-wrapper">
+    {% for badge in treehouse.badges %}<div class="treehouse-badge">
+        <a href="{{ badge.url }}" target="_blank">
+        <img src="{{ badge.icon_url }}" alt="Icon for {{ badge.name }}">
+        </a>
+        <p>{{ badge.name }}</p>
+    </div>{% endfor %}
+    </div>
+    <div class="treehouse-activity-block">
+        <p class="total-points">{{ treehouse.points.total }} <span id="total-points">Total Points</span></p>
+        <ul id="language-list" class='language-list'>
+            {% for language, points in treehouse.points if language != 'total' and points != 0 %}
+            <li>
+                <strong class="title">{{ language }}</strong>
+                <span class="content">{{ points }}</span>
+            </li>
+            {%  endfor %}
+        </ul>
+    </div>
+</div>
