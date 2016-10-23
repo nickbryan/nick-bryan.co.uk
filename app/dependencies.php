@@ -14,7 +14,6 @@ use Interop\Container\ContainerInterface;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Mni\FrontYAML\Parser;
-use Slim\Container;
 use Slim\Handlers\Strategies\RequestResponseArgs;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
@@ -42,16 +41,20 @@ $container[Parser::class] = function() {
     return new Parser(null, new ParsedownExtraParser());
 };
 
-$container[ContentParser::class] = function(ContainerInterface $container) {
-    $filesystem = new Filesystem(new Local(__DIR__.'/views/markdown'));
+$container['filesystem.markdown'] = function (ContainerInterface $container) {
+    return new Filesystem(new Local(__DIR__ . '/views/markdown'));
+};
 
-    return new ContentParser($filesystem, $container->get(Parser::class));
+$container['filesystem.storage'] = function (ContainerInterface $container) {
+    return new Filesystem(new Local(__DIR__ . '/../storage/'));
+};
+
+$container[ContentParser::class] = function(ContainerInterface $container) {
+    return new ContentParser($container->get('filesystem.markdown'), $container->get(Parser::class));
 };
 
 $container[Treehouse::class] = function(ContainerInterface $container) {
-    $filesystem = new Filesystem(new Local(__DIR__.'/../storage/'));
-
-    return new Treehouse($filesystem);
+    return new Treehouse($container->get('filesystem.storage'));
 };
 
 $container[HomeAction::class] = function(ContainerInterface $container) {
