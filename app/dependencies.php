@@ -14,10 +14,15 @@ use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Mni\FrontYAML\Parser;
 use Slim\Container;
+use Slim\Handlers\Strategies\RequestResponseArgs;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
 $container = $app->getContainer();
+
+$container['foundHandler'] = function() {
+    return new RequestResponseArgs();
+};
 
 $container['view'] = function(Container $container) {
     $settings = $container->get('settings');
