@@ -10,16 +10,21 @@ use App\Actions\TreehouseSaveAction;
 use App\ContentParser;
 use App\ParsedownExtraParser;
 use App\Treehouse;
+use Interop\Container\ContainerInterface;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Mni\FrontYAML\Parser;
-use Slim\Container;
+use Slim\Handlers\Strategies\RequestResponseArgs;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
 $container = $app->getContainer();
 
-$container['view'] = function(Container $container) {
+$container['foundHandler'] = function() {
+    return new RequestResponseArgs();
+};
+
+$container['view'] = function(ContainerInterface $container) {
     $settings = $container->get('settings');
 
     $view = new Twig($settings['view']['template_path'], $settings['view']['twig']);
@@ -36,26 +41,30 @@ $container[Parser::class] = function() {
     return new Parser(null, new ParsedownExtraParser());
 };
 
-$container[ContentParser::class] = function(Container $container) {
-    $filesystem = new Filesystem(new Local(__DIR__.'/views/markdown'));
-
-    return new ContentParser($filesystem, $container->get(Parser::class));
+$container['filesystem.markdown'] = function (ContainerInterface $container) {
+    return new Filesystem(new Local(__DIR__ . '/views/markdown'));
 };
 
-$container[Treehouse::class] = function(Container $container) {
-    $filesystem = new Filesystem(new Local(__DIR__.'/../storage/'));
-
-    return new Treehouse($filesystem);
+$container['filesystem.storage'] = function (ContainerInterface $container) {
+    return new Filesystem(new Local(__DIR__ . '/../storage/'));
 };
 
-$container[HomeAction::class] = function(Container $container) {
+$container[ContentParser::class] = function(ContainerInterface $container) {
+    return new ContentParser($container->get('filesystem.markdown'), $container->get(Parser::class));
+};
+
+$container[Treehouse::class] = function(ContainerInterface $container) {
+    return new Treehouse($container->get('filesystem.storage'));
+};
+
+$container[HomeAction::class] = function(ContainerInterface $container) {
     return new HomeAction($container->get('view'), $container->get(ContentParser::class));
 };
 
-$container[AboutAction::class] = function(Container $container) {
+$container[AboutAction::class] = function(ContainerInterface $container) {
     return new AboutAction($container->get('view'), $container->get(ContentParser::class), $container->get(Treehouse::class));
 };
 
-$container[TreehouseSaveAction::class] = function(Container $container) {
+$container[TreehouseSaveAction::class] = function(ContainerInterface $container) {
     return new TreehouseSaveAction($container->get(Treehouse::class));
 };

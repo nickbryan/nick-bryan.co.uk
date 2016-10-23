@@ -8,7 +8,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
 
-final class HomeAction extends Action
+final class HomeAction
 {
     const CONTENT_FILE = 'home.md';
 

@@ -9,7 +9,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
 
-final class TreehouseSaveAction extends Action
+final class TreehouseSaveAction
 {
     /**
      * @var Treehouse
