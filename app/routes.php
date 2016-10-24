@@ -17,6 +17,6 @@ $app->post('/treehouse', TreehouseSaveAction::class);
 
 $app->get('/blog', function(){
     return 'Blog Index Page';
-});
+})->setName('blogPage');
 
 $app->get('/blog/{slug}', BlogPageAction::class);
