@@ -6,8 +6,10 @@
  */
 use App\Actions\AboutAction;
 use App\Actions\HomeAction;
+use App\Actions\PageNotFoundAction;
 use App\Actions\TreehouseSaveAction;
 use App\ContentParser;
+use App\Middleware\HandlePageNotFound;
 use App\ParsedownExtraParser;
 use App\Treehouse;
 use Interop\Container\ContainerInterface;
@@ -20,10 +22,6 @@ use Slim\Views\TwigExtension;
 
 $container = $app->getContainer();
 
-$container['foundHandler'] = function() {
-    return new RequestResponseArgs();
-};
-
 $container['view'] = function(ContainerInterface $container) {
     $settings = $container->get('settings');
 
@@ -35,6 +33,18 @@ $container['view'] = function(ContainerInterface $container) {
     $view->addExtension(new Twig_Extension_StringLoader());
 
     return $view;
+};
+
+$container['foundHandler'] = function(ContainerInterface $container) {
+    return new RequestResponseArgs();
+};
+
+$container['notFoundHandler'] = function(ContainerInterface $container) {
+    return new PageNotFoundAction($container->get('view'), $container->get('settings')['not_found_template']);
+};
+
+$container['middleware.handlePageNotFound'] = function(ContainerInterface $container) {
+    return new HandlePageNotFound($container->get('notFoundHandler'));
 };
 
 $container[Parser::class] = function() {
