@@ -5,6 +5,7 @@
  * @var Slim\App $app
  */
 use App\Actions\AboutAction;
+use App\Actions\BlogPageAction;
 use App\Actions\HomeAction;
 use App\Actions\TreehouseSaveAction;
 use App\ContentParser;
@@ -41,6 +42,10 @@ $container[Parser::class] = function() {
     return new Parser(null, new ParsedownExtraParser());
 };
 
+$container['filesystem.blog'] = function (ContainerInterface $container) {
+    return new Filesystem(new Local(__DIR__ . '/views/markdown/blog'));
+};
+
 $container['filesystem.markdown'] = function (ContainerInterface $container) {
     return new Filesystem(new Local(__DIR__ . '/views/markdown'));
 };
@@ -58,13 +63,17 @@ $container[Treehouse::class] = function(ContainerInterface $container) {
 };
 
 $container[HomeAction::class] = function(ContainerInterface $container) {
-    return new HomeAction($container->get('view'), $container->get(ContentParser::class));
+    return new HomeAction($container->get('view'), $container->get('filesystem.markdown'), $container->get(ContentParser::class));
 };
 
 $container[AboutAction::class] = function(ContainerInterface $container) {
-    return new AboutAction($container->get('view'), $container->get(ContentParser::class), $container->get(Treehouse::class));
+    return new AboutAction($container->get('view'), $container->get('filesystem.markdown'), $container->get(ContentParser::class), $container->get(Treehouse::class));
 };
 
 $container[TreehouseSaveAction::class] = function(ContainerInterface $container) {
     return new TreehouseSaveAction($container->get(Treehouse::class));
+};
+
+$container[BlogPageAction::class] = function(ContainerInterface $container) {
+    return new BlogPageAction($container->get('view'), $container->get('filesystem.blog'), $container->get(ContentParser::class));
 };
