@@ -2,7 +2,9 @@
 
 namespace App;
 
+use League\Flysystem\File;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Handler;
 use Mni\FrontYAML\Document;
 use Mni\FrontYAML\Parser;
 
@@ -30,11 +32,11 @@ class ContentParser
     }
 
     /**
-     * @param string $filePath
+     * @param File|Handler $file
      */
-    public function parseFile($filePath)
+    public function parse(File $file)
     {
-        $this->content = $this->parser->parse($this->filesystem->get($filePath)->read());
+        $this->content = $this->parser->parse($file->read());
     }
 
     /**

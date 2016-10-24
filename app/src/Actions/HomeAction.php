@@ -4,15 +4,20 @@ namespace App\Actions;
 
 use App\ContentParser;
 use DateTime;
+use League\Flysystem\FilesystemInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
 
 final class HomeAction
 {
-    const CONTENT_FILE = 'home.md';
-
+    const CONTENT_FILE  = 'home.md';
     const TEMPLATE_PATH = 'pages/home.twig';
+
+    /**
+     * @var FilesystemInterface
+     */
+    private $filesystem;
 
     /**
      * @var ContentParser
@@ -24,15 +29,16 @@ final class HomeAction
      */
     private $view;
 
-    public function __construct(Twig $view, ContentParser $contentParser)
+    public function __construct(Twig $view, FilesystemInterface $filesystem, ContentParser $contentParser)
     {
         $this->view = $view;
         $this->parser = $contentParser;
+        $this->filesystem = $filesystem;
     }
 
     public function __invoke(Request $request, Response $response)
     {
-        $this->parser->parseFile(self::CONTENT_FILE);
+        $this->parser->parse($this->filesystem->get(self::CONTENT_FILE));
 
         $this->view->render($response, self::TEMPLATE_PATH, array_merge([
             'age' => $this->getAge(),
