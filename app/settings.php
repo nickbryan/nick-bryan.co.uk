@@ -15,6 +15,12 @@ return [
             ]
         ],
 
+        // Blog settings
+        'blog' => [
+            'name' => 'Blog'
+        ],
+
+        // Error settings
         'not_found_template' => '404.twig'
     ]
 ];

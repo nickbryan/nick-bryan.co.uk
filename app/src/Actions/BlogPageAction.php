@@ -13,11 +13,6 @@ class BlogPageAction
     const MD_EXTENSION = '.md';
 
     /**
-     * @var string
-     */
-    private $defaultPageTitle;
-
-    /**
      * @var ContentParser
      */
     private $contentParser;
@@ -31,14 +26,17 @@ class BlogPageAction
      * @var Twig
      */
     private $view;
+    /**
+     * @var array
+     */
+    private $settings;
 
-    public function __construct(Twig $view, FilesystemInterface $filesystem, ContentParser $contentParser)
+    public function __construct(Twig $view, FilesystemInterface $filesystem, ContentParser $contentParser, array $settings)
     {
         $this->filesystem = $filesystem;
         $this->contentParser = $contentParser;
         $this->view = $view;
-
-        $this->defaultPageTitle = 'Blog';
+        $this->settings = $settings;
     }
 
     public function __invoke(Request $request, Response $response, $slug)
@@ -60,7 +58,7 @@ class BlogPageAction
     {
         $defaults = [
             'page' => [
-                'title' => $this->defaultPageTitle
+                'title' => $this->settings['name']
             ]
         ];
 

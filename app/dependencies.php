@@ -5,6 +5,7 @@
  * @var Slim\App $app
  */
 use App\Actions\AboutAction;
+use App\Actions\BlogAction;
 use App\Actions\BlogPageAction;
 use App\Actions\HomeAction;
 use App\Actions\PageNotFoundAction;
@@ -73,17 +74,35 @@ $container[Treehouse::class] = function(ContainerInterface $container) {
 };
 
 $container[HomeAction::class] = function(ContainerInterface $container) {
-    return new HomeAction($container->get('view'), $container->get('filesystem.markdown'), $container->get(ContentParser::class));
+    return new HomeAction(
+        $container->get('view'),
+        $container->get('filesystem.markdown'),
+        $container->get(ContentParser::class)
+    );
 };
 
 $container[AboutAction::class] = function(ContainerInterface $container) {
-    return new AboutAction($container->get('view'), $container->get('filesystem.markdown'), $container->get(ContentParser::class), $container->get(Treehouse::class));
+    return new AboutAction(
+        $container->get('view'),
+        $container->get('filesystem.markdown'),
+        $container->get(ContentParser::class),
+        $container->get(Treehouse::class)
+    );
 };
 
 $container[TreehouseSaveAction::class] = function(ContainerInterface $container) {
     return new TreehouseSaveAction($container->get(Treehouse::class));
 };
 
+$container[BlogAction::class] = function(ContainerInterface $container) {
+    return new BlogAction($container->get('view'));
+};
+
 $container[BlogPageAction::class] = function(ContainerInterface $container) {
-    return new BlogPageAction($container->get('view'), $container->get('filesystem.blog'), $container->get(ContentParser::class));
+    return new BlogPageAction(
+        $container->get('view'),
+        $container->get('filesystem.blog'),
+        $container->get(ContentParser::class),
+        $container->get('settings')['blog']
+    );
 };
