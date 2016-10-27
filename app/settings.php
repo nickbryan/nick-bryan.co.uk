@@ -13,6 +13,8 @@ return [
                 'debug' => true,
                 'auto_reload' => true,
             ]
-        ]
+        ],
+
+        'not_found_template' => '404.twig'
     ]
 ];
