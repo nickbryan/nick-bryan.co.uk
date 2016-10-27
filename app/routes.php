@@ -19,4 +19,4 @@ $app->get('/blog', function(){
     return 'Blog Index Page';
 })->setName('blogPage');
 
-$app->get('/blog/{slug}', BlogPageAction::class);
+$app->get('/blog/{slug}', BlogPageAction::class)->add('middleware.handlePageNotFound');
